@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-require('dotenv').config();
-const MONGO_URL = process.env.MONGO_URL;
 
-mongoose.connect(MONGO_URL, {
+require('dotenv').config();
+const MONGO_DB = process.env.MONGO_DB
+
+mongoose.connect(MONGO_DB || "mongodb://localhost/javascriptNote", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -12,3 +13,7 @@ mongoose.connect(MONGO_URL, {
 }).catch((error) => {
     console.log(error)
 });
+
+mongoose.connection.on('connected', () => {
+    console.log("Mongoose is connected !!!");
+})
